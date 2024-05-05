@@ -2,6 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('necklaces', function(table) {
       table.increments('id').primary();
       table.string('description').notNullable();
+      table.integer('price').notNullable();
       table.string('size').notNullable();
       table.string('color');
       table.string('gender').notNullable();
