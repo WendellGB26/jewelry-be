@@ -1,0 +1,25 @@
+{
+  "name": "diamond-be",
+  "version": "18.0.0",
+  "description": "diamond be",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WendellGB26/diamond-be.git"
+  },
+  "author": "WendellGB26",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WendellGB26/diamond-be/issues"
+  },
+  "homepage": "https://github.com/WendellGB26/diamond-be#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "pg": "^8.11.5",
+    "sqlite3": "^5.1.7"
+  }
+}
