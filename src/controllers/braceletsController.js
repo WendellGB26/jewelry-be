@@ -1,9 +1,16 @@
 const { getBracelets, createBracelets, updateBracelets, deleteBracelets } = require('../db/braceletsQueries');
+const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getBraceletsController = async (req, res) => {
   try {
     const bracelets = await getBracelets();
-    res.json(bracelets);
+
+    const braceletsWithSignedUrls = await Promise.all(bracelets.map(async bracelet => {
+      const imageUrl = await getSignedUrl('jewelry-war-bucket', bracelet.imagekey);
+      return { ...bracelet, imageUrl };
+    }));
+
+    res.json(braceletsWithSignedUrls);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Get error bracelets' });

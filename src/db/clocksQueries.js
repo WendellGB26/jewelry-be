@@ -10,21 +10,21 @@ const getClocks = async () => {
   }
 };
 
-const createClocks = async (user) => {
+const createClocks = async (data) => {
   const client = await pool.connect();
   try {
-    const { name, price, description } = user;
-    const result = await client.query('INSERT INTO clocks (name, price, description) VALUES ($1, $2, $3) RETURNING *', [name, price, description]);
+    const { description, price, size, color, gender, imagekey } = data;
+    const result = await client.query('INSERT INTO clocks (description, price, size, color, gender, imagekey) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [description, price, size, color, gender, imagekey]);
     return result.rows[0];
   } finally {
     client.release();
   }
 };
 
-const updateClocks = async (id, user) => {
+const updateClocks = async (id, data) => {
   const client = await pool.connect();
   try {
-    const { name, price, description } = user;
+    const { name, price, description } = data;
     const result = await client.query('UPDATE clocks SET name = $1, price = $2, description = $3 WHERE id = $4 RETURNING *', [name, price, description, id]);
     return result.rows[0];
   } finally {

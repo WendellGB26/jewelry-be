@@ -1,9 +1,16 @@
 const { getNecklaces, createNecklaces, updateNecklaces, deleteNecklaces } = require('../db/necklacesQueries');
+const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getNecklacesController = async (req, res) => {
   try {
     const necklaces = await getNecklaces();
-    res.json(necklaces);
+
+    const necklacesWithSignedUrls = await Promise.all(necklaces.map(async necklace => {
+      const imageUrl = await getSignedUrl('jewelry-war-bucket', necklace.imagekey);
+      return { ...necklace, imageUrl };
+    }));
+
+    res.json(necklacesWithSignedUrls);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Get error necklaces' });
