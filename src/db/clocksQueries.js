@@ -13,8 +13,8 @@ const getClocks = async () => {
 const createClocks = async (data) => {
   const client = await pool.connect();
   try {
-    const { description, price, size, color, gender, imagekey } = data;
-    const result = await client.query('INSERT INTO clocks (description, price, size, color, gender, imagekey) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [description, price, size, color, gender, imagekey]);
+    const { name, description, price, size, color, gender, imagekey } = data;
+    const result = await client.query('INSERT INTO clocks (name, description, price, size, color, gender, imagekey) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [name, description, price, size, color, gender, imagekey]);
     return result.rows[0];
   } finally {
     client.release();
