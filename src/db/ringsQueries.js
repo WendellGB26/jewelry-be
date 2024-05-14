@@ -13,8 +13,8 @@ const getRings = async () => {
 const createRings = async (user) => {
   const client = await pool.connect();
   try {
-    const {name, description, price, size, color, gender, imagekey } = user;
-    const result = await client.query('INSERT INTO rings (name, description, price, size, color, gender, imagekey) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [name, description, price, size, color, gender, imagekey]);
+    const {name, description, price, size, color, gender, type, imagekey } = user;
+    const result = await client.query('INSERT INTO rings (name, description, price, size, color, gender, type, imagekey) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [name, description, price, size, color, gender, type, imagekey]);
     return result.rows[0];
   } finally {
     client.release();

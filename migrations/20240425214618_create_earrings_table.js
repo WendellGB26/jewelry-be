@@ -6,6 +6,7 @@ exports.up = function(knex) {
       table.integer('price').notNullable();
       table.string('color');
       table.string('gender').notNullable();
+      table.string('type').notNullable();
       table.string('imagekey').notNullable();
       table.timestamps(true, true);
     });
