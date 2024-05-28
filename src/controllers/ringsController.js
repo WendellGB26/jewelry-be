@@ -2,8 +2,9 @@ const { getRings, createRings, updateRings, deleteRings } = require('../db/rings
 const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getRingsController = async (req, res) => {
+  const { genero } = req.params;
   try {
-    const rings = await getRings();
+    const rings = await getRings(genero);
 
     const ringsWithSignedUrls = await Promise.all(rings.map(async ring => {
       const imageUrl = await getSignedUrl('jewelry-war-bucket', ring.imagekey);
@@ -19,7 +20,7 @@ const getRingsController = async (req, res) => {
 
 const createRingsController = async (req, res) => {
   try {
-    console.log('req.body:', req.body)
+    
     const rings = await createRings(req.body);
     res.status(201).json(rings);
   } catch (error) {

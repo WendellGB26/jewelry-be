@@ -2,8 +2,9 @@ const { getClocks, createClocks, updateClocks, deleteClocks } = require('../db/c
 const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getClocksController = async (req, res) => {
+  const { genero } = req.params;
   try {
-    const clocks = await getClocks();
+    const clocks = await getClocks(genero);
 
     // Mapea los relojes para obtener las URLs firmadas de las imágenes
     const clocksWithSignedUrls = await Promise.all(clocks.map(async clock => {
@@ -20,7 +21,7 @@ const getClocksController = async (req, res) => {
 
 const createClocksController = async (req, res) => {
   try {
-    console.log('req.body:', req.body)
+    
     const clock = await createClocks(req.body);
     res.status(201).json(clock);
   } catch (error) {

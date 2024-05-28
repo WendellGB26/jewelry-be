@@ -2,8 +2,9 @@ const { getEarrings, createEarrings, updateEarrings, deleteEarrings } = require(
 const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getEarringsController = async (req, res) => {
+  const { genero } = req.params;
   try {
-    const earrings = await getEarrings();
+    const earrings = await getEarrings(genero);
 
     const earringsWithSignedUrls = await Promise.all(earrings.map(async earring => {
       const imageUrl = await getSignedUrl('jewelry-war-bucket', earring.imagekey);
@@ -19,7 +20,7 @@ const getEarringsController = async (req, res) => {
 
 const createEarringsController = async (req, res) => {
   try {
-    console.log('req.body:', req.body)
+    
     const earrings = await createEarrings(req.body);
     res.status(201).json(earrings);
   } catch (error) {

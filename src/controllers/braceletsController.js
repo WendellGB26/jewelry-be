@@ -2,8 +2,9 @@ const { getBracelets, createBracelets, updateBracelets, deleteBracelets } = requ
 const { getSignedUrl } = require('../utils/getSignedUrl');
 
 const getBraceletsController = async (req, res) => {
+  const { genero } = req.params;
   try {
-    const bracelets = await getBracelets();
+    const bracelets = await getBracelets(genero);
 
     const braceletsWithSignedUrls = await Promise.all(bracelets.map(async bracelet => {
       const imageUrl = await getSignedUrl('jewelry-war-bucket', bracelet.imagekey);
@@ -19,7 +20,7 @@ const getBraceletsController = async (req, res) => {
 
 const createBraceletsController = async (req, res) => {
   try {
-    console.log('req.body:', req.body)
+    
     const bracelets = await createBracelets(req.body);
     res.status(201).json(bracelets);
   } catch (error) {

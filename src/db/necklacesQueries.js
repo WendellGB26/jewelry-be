@@ -1,9 +1,9 @@
 const pool = require('./config');
 
-const getNecklaces = async () => {
+const getNecklaces = async (genero) => {
   const client = await pool.connect();
   try {
-    const result = await client.query('SELECT * FROM necklaces');
+    const result = await client.query('SELECT * FROM necklaces WHERE gender = $1 OR gender = \'unisex\'', [genero]);
     return result.rows;
   } finally {
     client.release();

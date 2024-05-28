@@ -1,9 +1,10 @@
 const pool = require('./config');
 
-const getClocks = async () => {
+const getClocks = async (genero) => {
   const client = await pool.connect();
   try {
-    const result = await client.query('SELECT * FROM clocks');
+    // Modifica el query para filtrar los relojes por género
+    const result = await client.query('SELECT * FROM clocks WHERE gender = $1 OR gender = \'unisex\'', [genero]);
     return result.rows;
   } finally {
     client.release();
